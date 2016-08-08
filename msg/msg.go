@@ -7,6 +7,7 @@ Here is an example use.
     import (
       "jlinoff/utils/msg"
       "io"
+      "os"
     )
 
     // My package logger.
