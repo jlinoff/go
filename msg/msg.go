@@ -134,7 +134,7 @@ type Object struct {
 	// Any other text is left verbatim.
 	//
 	// The default format is.
-	//   "%(-27)time %(-7)type" %file %line - %msg
+	//   `%(-27)time %(-7)type %file %line - %msg`
 	Format string
 
 	// outputFormat created by NewMsgObject and used to generate a message.
