@@ -34,17 +34,17 @@ Here is an example use.
       // Note that this is the same as this because I used the defaults.
       //     msg.NewMsg("MyPackage", "", "", []io.Writer{})
       l, e := msg.NewMsg(n, f, t, w)
-      if err != nil { panic(err) }
+      if e != nil { panic(e) }
       log = l
     }
 
     func test() {
       log.Debug("message of type %v", "debug")
       log.Info("info message")
-      log.Warning("warning")
+      log.Warn("warning")
 
       // Now print messages to stdout and to a log while in this scope.
-      fp := os.Create("log.txt")
+      fp, _ := os.Create("log.txt")
       log.Writers = append(log.Writers, fp)
 
       // This stuff will go to stdout and the log file.
