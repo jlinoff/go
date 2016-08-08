@@ -1,6 +1,6 @@
 /*
 Package msg creates a simple messaging package with flexible formatting that
-can be used for stdout and/or logging.
+can be used to write to multiple sinks.
 
 Here is an example use.
 
