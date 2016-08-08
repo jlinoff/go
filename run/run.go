@@ -1,5 +1,5 @@
 /*
-Packge run contains a few functions that useful for running commands using os/exec.
+Packge run contains a few wrappers for exec.Command and a function to get the exit code.
 
 Here is an example usage.
 
