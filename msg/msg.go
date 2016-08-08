@@ -381,7 +381,7 @@ func (o Object) PrintMsg(t string, l int, f string, a ...interface{}) {
 		_, err := fmt.Fprintf(w, s)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, `
-  FATAL: fmt.Fprintf() failed to %v
+  FATAL: fmt.Fprintf() failed for writer %v
          call stack = %v %v %v
          output = %v
          error = %v
