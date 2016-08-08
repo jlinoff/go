@@ -193,6 +193,8 @@ func NewMsg(n string, f string, t string, w []io.Writer) (obj *Object, err error
 Debug prints a debug message obtaining the callers filename, function and
 line number.
 
+It automatically appends a new line.
+
 Example:
       msg.Debug("%v = %v", key, value)
 */
@@ -207,6 +209,8 @@ DebugWithLevel prints a debug message obtaining the filename, function and
 line number from the caller specified by level "l". l=2 is the same
 as Debug().
 
+It automatically appends a new line.
+
 Example:
       msg.DebugWithLevel(2, "%v = %v", key, value)
 */
@@ -219,6 +223,8 @@ func (o Object) DebugWithLevel(l int, f string, a ...interface{}) {
 /*
 Info prints an info message obtaining the callers filename, function and
 line number.
+
+It automatically appends a new line.
 
 Example:
       msg.Info("%v = %v", key, value)
@@ -234,6 +240,8 @@ InfoWithLevel prints an info message obtaining the filename, function and
 line number from the caller specified by level "l". l=2 is the same
 as Debug().
 
+It automatically appends a new line.
+
 Example:
       msg.InfoWithLevel(2, "%v = %v", key, value)
 */
@@ -246,6 +254,8 @@ func (o Object) InfoWithLevel(l int, f string, a ...interface{}) {
 /*
 Warn prints a warning message obtaining the callers filename, function and
 line number.
+
+It automatically appends a new line.
 
 Example:
       msg.Warn("%v = %v", key, value)
@@ -261,6 +271,8 @@ WarnWithLevel prints a warning message obtaining the filename, function and
 line number from the caller specified by level "l". l=2 is the same
 as Debug().
 
+It automatically appends a new line.
+
 Example:
       msg.WarnWithLevel(2, "%v = %v", key, value)
 */
@@ -273,6 +285,8 @@ func (o Object) WarnWithLevel(l int, f string, a ...interface{}) {
 /*
 Err prints an error message obtaining the callers filename, function and
 line number and exits. It cannot be disabled.
+
+It automatically appends a new line.
 
 Example:
       msg.Err("%v = %v", key, value)
@@ -287,6 +301,8 @@ ErrWithLevel prints an error message obtaining the filename, function and
 line number from the caller specified by level "l". l=2 is the same
 as Debug() and exits. It cannot be disabled.
 
+It automatically appends a new line.
+
 Example:
       msg.ErrWithLevel(2, "%v = %v", key, value)
 */
@@ -298,6 +314,8 @@ func (o Object) ErrWithLevel(l int, f string, a ...interface{}) {
 /*
 ErrNoExit prints an error message obtaining the callers filename, function and
 line number. It does not exit and cannot be disabled.
+
+It automatically appends a new line.
 
 Example:
       msg.ErrNoExit("%v = %v", key, value)
@@ -311,6 +329,8 @@ ErrNoExitWithLevel prints an error message obtaining the filename, function and
 line number from the caller specified by level "l". l=2 is the same
 as Debug(). It does not exit and cannot be disabled.
 
+It automatically appends a new line.
+
 Example:
       msg.ErrNoExitWithLevel(2, "%v = %v", key, value)
 */
@@ -321,6 +341,8 @@ func (o Object) ErrNoExitWithLevel(l int, f string, a ...interface{}) {
 /*
 Printf prints directly to the log without the format string.
 It allows you to insert arbitrary text.
+
+Unlike the other functions it does not automatically append a new line.
 
 Example:
       msg.Printf("this is just random text that goes to all writers\n")
