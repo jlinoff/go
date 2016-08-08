@@ -381,11 +381,11 @@ func (o Object) PrintMsg(t string, l int, f string, a ...interface{}) {
 		_, err := fmt.Fprintf(w, s)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, `
-  FATAL: fmt.Fprintf() failed for writer %v
-         call stack = %v %v %v
-         output = %v
-         error = %v
-         `, w, m["file"], m["func"], m["line"], s[:len(s)-2], err)
+FATAL: fmt.Fprintf() failed for writer %v
+       call stack = %v %v %v
+       output = %v
+       error = %v
+`, w, m["file"], m["func"], m["line"], s[:len(s)-2], err)
 			os.Exit(1)
 		}
 	}
