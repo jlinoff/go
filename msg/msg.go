@@ -138,10 +138,10 @@ type Object struct {
 	//   `%(-27)time %(-7)type %file %line - %msg`
 	Format string
 
-	// outputFormat created by NewMsgObject and used to generate a message.
+	// outputFormat created by NewMsg and used to generate a message.
 	outputFormat string
 
-	// outputFlds created by NewMsgObject and used to specify the fields.
+	// outputFlds created by NewMsg and used to specify the fields.
 	outputFlds []string
 }
 
