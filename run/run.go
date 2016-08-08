@@ -51,7 +51,7 @@ Cmd runs a command.
 The output is displayed and the output is returned.
 
 Example:
-      // Run the command, do not display the output.
+      // Run the command, display the output.
       if _, e := run.Cmd(strings.Fields("ls -l")); e != nil { panic(e) }
 */
 func Cmd(a []string) (output string, err error) {
@@ -74,6 +74,43 @@ func Cmd(a []string) (output string, err error) {
 	// Run the command.
 	err = c.Run()
 	output = buf.String()
+	return
+}
+
+/*
+CmdWithWriters runs a command with customer sinks.
+
+The caller decides what to display and/or receive.
+
+Example:
+      // Run the command, display the output to stdout, to a file and capture
+      // it in a buffer.
+      var buf bytes.Buffer
+
+      fp, _ := os.Create("/tmp/log")
+      defer fp.Close()
+
+      w := io.Writer[]{os.Stdout, fp, &buf}
+      if _, e := run.Cmd(strings.Fields("ls -l")); e != nil { panic(e) }
+      fmt.Println(buf.String())  // print the buffer
+*/
+func CmdWithWriters(a []string, w []io.Writer) (err error) {
+	if len(a) == 0 {
+		err = fmt.Errorf("no command specified")
+		return
+	}
+
+	// Create the command object.
+	c := exec.Command(a[0], a[1:]...)
+
+	// Write stdout and stderr to a buffer and to os.Stdout.
+	m := io.MultiWriter(w...)
+	c.Stdout = m
+	c.Stderr = m
+	c.Stdin = os.Stdin
+
+	// Run the command.
+	err = c.Run()
 	return
 }
 
