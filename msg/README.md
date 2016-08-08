@@ -1,1 +1,1 @@
-Documentation is here: https://godoc.org/github.com/jlinoff/go/src/utils/msg.
+Documentation is [here](https://godoc.org/github.com/jlinoff/go/msg).
