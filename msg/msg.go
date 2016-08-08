@@ -179,7 +179,7 @@ func NewMsg(n string, f string, t string, w []io.Writer) (obj *Object, err error
 	}
 
 	// Parse the format.
-	ofmt, oflds, err := ParseFormatString(f)
+	ofmt, oflds, err := ParseFormatString(obj.Format)
 	obj.outputFormat = ofmt
 	obj.outputFlds = oflds
 
