@@ -50,6 +50,7 @@ Here is an example use.
       // This stuff will go to stdout and the log file.
       log.Info("both")
       log.ErrNoExit("bad stuff happened but i can recover!")
+      log.Printf("this is random text that is not formatted\n")
 
       // Clean up by removing the file from the writers and then
       // closing it.
@@ -83,6 +84,8 @@ type Interface interface {
 	WarnWithLevel(l int, f string, a ...interface{})
 	ErrWithLevel(l int, f string, a ...interface{})
 	ErrNoExitWithLevel(l int, f string, a ...interface{})
+
+	Printf(f string, a ...interface{})
 }
 
 // Object defines the logger.
@@ -195,7 +198,7 @@ Example:
 */
 func (o Object) Debug(f string, a ...interface{}) {
 	if o.DebugEnabled {
-		o.Print("DEBUG", 2, f, a...)
+		o.PrintMsg("DEBUG", 2, f, a...)
 	}
 }
 
@@ -209,7 +212,7 @@ Example:
 */
 func (o Object) DebugWithLevel(l int, f string, a ...interface{}) {
 	if o.DebugEnabled {
-		o.Print("DEBUG", l, f, a...)
+		o.PrintMsg("DEBUG", l, f, a...)
 	}
 }
 
@@ -222,7 +225,7 @@ Example:
 */
 func (o Object) Info(f string, a ...interface{}) {
 	if o.InfoEnabled {
-		o.Print("INFO", 2, f, a...)
+		o.PrintMsg("INFO", 2, f, a...)
 	}
 }
 
@@ -236,7 +239,7 @@ Example:
 */
 func (o Object) InfoWithLevel(l int, f string, a ...interface{}) {
 	if o.InfoEnabled {
-		o.Print("INFO", l, f, a...)
+		o.PrintMsg("INFO", l, f, a...)
 	}
 }
 
@@ -249,7 +252,7 @@ Example:
 */
 func (o Object) Warn(f string, a ...interface{}) {
 	if o.WarningEnabled {
-		o.Print("WARNING", 2, f, a...)
+		o.PrintMsg("WARNING", 2, f, a...)
 	}
 }
 
@@ -263,7 +266,7 @@ Example:
 */
 func (o Object) WarnWithLevel(l int, f string, a ...interface{}) {
 	if o.WarningEnabled {
-		o.Print("WARNING", 2, f, a...)
+		o.PrintMsg("WARNING", 2, f, a...)
 	}
 }
 
@@ -275,7 +278,7 @@ Example:
       msg.Err("%v = %v", key, value)
 */
 func (o Object) Err(f string, a ...interface{}) {
-	o.Print("ERROR", 2, f, a...)
+	o.PrintMsg("ERROR", 2, f, a...)
 	os.Exit(o.ErrorExitCode)
 }
 
@@ -288,7 +291,7 @@ Example:
       msg.ErrWithLevel(2, "%v = %v", key, value)
 */
 func (o Object) ErrWithLevel(l int, f string, a ...interface{}) {
-	o.Print("ERROR", 2, f, a...)
+	o.PrintMsg("ERROR", 2, f, a...)
 	os.Exit(o.ErrorExitCode)
 }
 
@@ -300,7 +303,7 @@ Example:
       msg.ErrNoExit("%v = %v", key, value)
 */
 func (o Object) ErrNoExit(f string, a ...interface{}) {
-	o.Print("ERROR", 2, f, a...)
+	o.PrintMsg("ERROR", 2, f, a...)
 }
 
 /*
@@ -312,19 +315,36 @@ Example:
       msg.ErrNoExitWithLevel(2, "%v = %v", key, value)
 */
 func (o Object) ErrNoExitWithLevel(l int, f string, a ...interface{}) {
-	o.Print("ERROR", 2, f, a...)
+	o.PrintMsg("ERROR", 2, f, a...)
 }
 
 /*
-Print is the basis of all message printers. It normally would not be called
-directly.
+Printf prints directly to the log without the format string.
+It allows you to insert arbitrary text.
+
+Example:
+      msg.Printf("this is just random text that goes to all writers\n")
+*/
+func (o Object) Printf(f string, a ...interface{}) {
+	// Create the formatted output string.
+	s := fmt.Sprintf(f, a...)
+
+	// Output it for each writer.
+	for _, w := range o.Writers {
+		fmt.Fprintf(w, s)
+	}
+}
+
+/*
+PrintMsg is the basis of all message printers except Printf. It prints the
+formatted messages and normally would not be called directly.
 
       t - is the type, normally one of DEBUG, INFO, WARNING or ERROR
       l - is the caller level: 0 is this function, 1 is the caller, 2 is the callers caller and so on
       f - format string
       a - argument list
 */
-func (o Object) Print(t string, l int, f string, a ...interface{}) {
+func (o Object) PrintMsg(t string, l int, f string, a ...interface{}) {
 	pc, fname, lineno, _ := runtime.Caller(l)
 	fct := runtime.FuncForPC(pc).Name()
 	fname = path.Base(fname[0 : len(fname)-3]) // strip off ".go"
