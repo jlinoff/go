@@ -20,6 +20,6 @@ src/github.com/jlinoff/go/run/run.go:
 	GOPATH=$$(pwd) go get github.com/jlinoff/go/run
 
 src/tester/tester.go: tester.go
-	@[ ! -d src/tester ] && mkdir src/tester || true
+	@[ ! -d src/tester ] && mkdir -p src/tester || true
 	@rm -f $@
 	cp $< $@
