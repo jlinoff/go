@@ -378,7 +378,16 @@ func (o Object) PrintMsg(t string, l int, f string, a ...interface{}) {
 
 	// Output it for each writer.
 	for _, w := range o.Writers {
-		fmt.Fprintf(w, s)
+		_, err := fmt.Fprintf(w, s)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, `
+  FATAL: fmt.Fprintf() failed to %v
+         call stack = %v %v %v
+         output = %v
+         error = %v
+         `, w, m["file"], m["func"], m["line"], s[:len(s)-2], err)
+			os.Exit(1)
+		}
 	}
 }
 
