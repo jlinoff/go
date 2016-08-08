@@ -5,7 +5,7 @@ can be used for stdout and/or logging.
 Here is an example use.
 
     import (
-      "jlinoff/msg"
+      "jlinoff/utils/msg"
       "io"
     )
 
