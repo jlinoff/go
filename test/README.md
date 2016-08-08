@@ -11,4 +11,9 @@ $ make
 
 Look for success on the last line.
 
+Use the clean target to start from scratch.
 
+```bash
+$ make clean
+$ make
+```
