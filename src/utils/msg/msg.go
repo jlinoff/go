@@ -318,10 +318,10 @@ func (o Object) ErrNoExitWithLevel(l int, f string, a ...interface{}) {
 Print is the basis of all message printers. It normally would not be called
 directly.
 
-t - is the type, normally one of DEBUG, INFO, WARNING or ERROR
-l - is the caller level: 0 is this function, 1 is the caller, 2 is the callers caller and so on
-f - format string
-a - argument list
+      t - is the type, normally one of DEBUG, INFO, WARNING or ERROR
+      l - is the caller level: 0 is this function, 1 is the caller, 2 is the callers caller and so on
+      f - format string
+      a - argument list
 */
 func (o Object) Print(t string, l int, f string, a ...interface{}) {
 	pc, fname, lineno, _ := runtime.Caller(l)
