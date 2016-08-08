@@ -5,7 +5,7 @@ Collection of go utilities. This is still being updated. It is not ready for use
 | ------- | ------------- |
 | github.com/jlinoff/go/msg | Simple messaging package with flexible formatting that can be used to write to multiple sinks. More info [here](https://godoc.org/github.com/jlinoff/go/msg). |
 
-Here is how you would install in your local project.
+Here is how you would install it in your local project.
 
 ```bash
 $ GOPATH=$(pwd) go get github.com/jlinoff/go/msg
